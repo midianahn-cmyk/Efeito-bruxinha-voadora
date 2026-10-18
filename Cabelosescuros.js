@@ -1,44 +1,116 @@
 
-/*
-==================================================
-BRUXINHA VOADORA — EFEITO EXTERNO PARA SITES E BLOGS
-
-Criadora: Com Mãos de Seda
-Site oficial: https://www.commaosdesedaoficial.com
-
-© 2026 Com Mãos de Seda.
-Todos os direitos reservados.
-==================================================
-*/
-
+/*!
+ * BRUXINHA VOADORA — EFEITO PARA SITES E BLOGS
+ * Criadora: Com Mãos de Seda
+ * Site oficial: https://www.commaosdesedaoficial.com
+ * © 2026 Com Mãos de Seda. Todos os direitos reservados.
+ */
 (function () {
   'use strict';
 
-  var ID_RAIZ = 'bruxinha-blogger';
-  var ID_ESTILO = 'bruxinha-estilo-externo';
-  var CHAVE_SUSPENSAO = 'cms_bruxinha_voadora_suspensa_ate';
-  var DURACAO_SUSPENSAO = 24 * 60 * 60 * 1000;
-
-  /* EVITA DUPLICAR O EFEITO */
-  if (document.getElementById(ID_RAIZ)) return;
+  if (window.__bruxinhaVoadoraCarregada) return;
+  window.__bruxinhaVoadoraCarregada = true;
 
   function iniciarBruxinha() {
-    if (!document.body) {
-      document.addEventListener(
-        'DOMContentLoaded',
-        iniciarBruxinha,
-        { once: true }
-      );
-      return;
-    }
-
-    if (document.getElementById(ID_RAIZ)) return;
+    if (document.getElementById('bruxinha-blogger')) return;
 
     /* =========================================
-       ESTILOS DO EFEITO
+       ANIMAÇÃO DA BRUXINHA
     ========================================= */
 
-    var css = `
+    var animacao = document.createElement('div');
+    animacao.id = 'bruxinha-blogger';
+    animacao.setAttribute('aria-hidden', 'true');
+
+    animacao.innerHTML = `
+      <div id="bruxinha-personagem">
+
+        <span class="bruxinha-fumaca">
+          <img
+            alt=""
+            class="imagem-fumaca"
+            src="https://static.vecteezy.com/system/resources/thumbnails/046/472/948/small/smoke-on-transparent-background-png.png"
+          >
+        </span>
+
+        <span class="bruxinha-emoji">
+          <img
+            alt=""
+            class="imagem-bruxinha"
+            src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgVdZqXB4WQNxSMAUIy0_RA-eeAYkBlcg_f1fFkxoSOH6EmDDHu8xfmoD7UZQc71RhxLR-lkjNp85XHNOz4fpsk2TAAq5K3oB4VHaWSC1QmzLDJbhVh7R3fc96BeC84smcFl4d5B5bH4aq6YrQmBYJodF7HJ4C2M6vb034LzdFsBUe04p-ZskJdQwMaEjBJ/s497/Bruxinha%20pequena%20cabelo%20branco.gif"
+          >
+        </span>
+
+        <span class="bruxinha-vassoura">
+          <img
+            alt=""
+            class="imagem-bruxinha"
+            src="https://www.imagensanimadas.com/data/media/196/morcego-imagem-animada-0096.gif"
+          >
+        </span>
+
+        <span class="bruxinha-risada">HA HA HA HA!</span>
+
+      </div>
+    `;
+
+    /* =========================================
+       ÁUDIO
+    ========================================= */
+
+    var audio = document.createElement('audio');
+    audio.id = 'audio-risada-bruxa';
+    audio.preload = 'none';
+
+    var fonteAudio = document.createElement('source');
+    fonteAudio.src =
+      'https://cdn.pixabay.com/download/audio/2022/03/10/audio_6f422dd969.mp3';
+    fonteAudio.type = 'audio/mpeg';
+
+    audio.appendChild(fonteAudio);
+
+    /* =========================================
+       CONTROLE E CRÉDITOS
+    ========================================= */
+
+    var controle = document.createElement('div');
+    controle.id = 'bruxinha-controle';
+
+    controle.innerHTML = `
+      <div id="bruxinha-botao-caixa">
+
+        <button
+          aria-label="Ativar ou desativar a risada da bruxa"
+          id="bruxinha-som"
+          type="button"
+        >🔊 Ativar Risada!</button>
+
+        <a
+          href="https://wa.me/5521979356412?text=Midian%20que%20quero%20essa%20bruxinha%20para%20o%20meu%20blog!"
+          id="credito-bruxinha"
+          rel="noopener noreferrer"
+          target="_blank"
+          title="Efeito criado por Com Mãos de Seda"
+        >© Com Mãos de Seda</a>
+
+      </div>
+
+      <button
+        aria-label="Suspender a bruxinha por 24 horas"
+        id="bruxinha-fechar"
+        title="Suspender por 24 horas"
+        type="button"
+      >✕</button>
+    `;
+
+    /* =========================================
+       ESTILOS COMPLETOS
+    ========================================= */
+
+    var estilo = document.createElement('style');
+    estilo.id = 'bruxinha-estilos';
+
+    estilo.textContent = `
       #bruxinha-blogger {
         position: fixed;
         inset: 0;
@@ -182,7 +254,7 @@ Todos os direitos reservados.
         background: #4a2b62 !important;
       }
 
-      /* CRÉDITO */
+      /* CRÉDITOS DENTRO DA CAIXA */
 
       #bruxinha-botao-caixa > #credito-bruxinha {
         position: static !important;
@@ -318,7 +390,7 @@ Todos os direitos reservados.
         }
       }
 
-      /* CELULAR */
+      /* CELULARES */
 
       @media (max-width: 600px) {
         #bruxinha-personagem {
@@ -383,177 +455,96 @@ Todos os direitos reservados.
       }
     `;
 
-    var estilo = document.createElement('style');
-    estilo.id = ID_ESTILO;
-    estilo.textContent = css;
-    document.head.appendChild(estilo);
-
     /* =========================================
-       CRIA O HTML AUTOMATICAMENTE
+       INSTALAÇÃO NA PÁGINA
     ========================================= */
 
-    var raiz = document.createElement('div');
-    raiz.id = ID_RAIZ;
-    raiz.setAttribute('aria-hidden', 'true');
-
-    raiz.innerHTML = `
-      <div id="bruxinha-personagem">
-
-        <span class="bruxinha-fumaca">
-          <img
-            src="https://static.vecteezy.com/system/resources/thumbnails/046/472/948/small/smoke-on-transparent-background-png.png"
-            alt=""
-            class="imagem-fumaca">
-        </span>
-
-        <span class="bruxinha-emoji">
-          <img
-            src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjDB6Oz_trJ96Oj7faqZd7hyphenhyphen_46pgFFOAOnuZTu01pCOyw2QRCKc4b4DmNvqzwsLEP7l6mr6Kanc4G76DYyr_fGljAsRucrAlizrBQPXeaXvKPooi-E2attdwD_8duEeZ4F7mXhTBbQ00vXz3zmvsWf8ksSxmGiMO2oLAmQuV7g8yDcNa3vnZIwBd41cFSG/s640/Bruxinha%20pequena.gif"
-            alt="Bruxinha voando"
-            class="imagem-bruxinha">
-        </span>
-
-        <span class="bruxinha-vassoura">
-          <img
-            src="https://www.imagensanimadas.com/data/media/196/morcego-imagem-animada-0096.gif"
-            alt=""
-            class="imagem-bruxinha">
-        </span>
-
-        <span class="bruxinha-risada">HA HA HA HA!</span>
-      </div>
-    `;
-
-    document.body.appendChild(raiz);
-
-    var audio = document.createElement('audio');
-    audio.id = 'audio-risada-bruxa';
-    audio.preload = 'none';
-
-    var fonteAudio = document.createElement('source');
-    fonteAudio.src =
-      'https://cdn.pixabay.com/download/audio/2022/03/10/audio_6f422dd969.mp3';
-    fonteAudio.type = 'audio/mpeg';
-    audio.appendChild(fonteAudio);
+    document.head.appendChild(estilo);
+    document.body.appendChild(animacao);
     document.body.appendChild(audio);
-
-    var controle = document.createElement('div');
-    controle.id = 'bruxinha-controle';
-
-    controle.innerHTML = `
-      <div id="bruxinha-botao-caixa">
-        <button
-          id="bruxinha-som"
-          type="button"
-          aria-label="Ativar ou desativar a risada da bruxa">
-          🔊 Ativar Risada!
-        </button>
-
-        <a
-          id="credito-bruxinha"
-          href="https://wa.me/5521979356412?text=Midian%20que%20quero%20essa%20bruxinha%20para%20o%20meu%20blog!"
-          target="_blank"
-          rel="noopener noreferrer"
-          title="Efeito criado por Com Mãos de Seda">
-          © Com Mãos de Seda
-        </a>
-      </div>
-
-      <button
-        id="bruxinha-fechar"
-        type="button"
-        aria-label="Suspender a bruxinha por 24 horas"
-        title="Suspender por 24 horas">
-        ✕
-      </button>
-    `;
-
     document.body.appendChild(controle);
 
-    /* =========================================
-       CONFIGURAÇÃO DO EFEITO
-    ========================================= */
+    var personagem = document.getElementById(
+      'bruxinha-personagem'
+    );
 
-    var personagem = document.getElementById('bruxinha-personagem');
-    var botao = document.getElementById('bruxinha-som');
-    var fechar = document.getElementById('bruxinha-fechar');
+    var botao = document.getElementById(
+      'bruxinha-som'
+    );
+
+    var fechar = document.getElementById(
+      'bruxinha-fechar'
+    );
 
     var somAtivado = false;
-    var suspensa = false;
-    var voandoAgora = false;
-
     var temporizador = null;
     var vooAtual = null;
     var vooInicial = null;
     var temporizadorSuspensao = null;
+    var voandoAgora = false;
+    var suspensa = false;
 
-    function limparTemporizadores() {
+    /* PARA O VOO E O ÁUDIO */
+
+    function pararBruxinha() {
       clearTimeout(temporizador);
       clearTimeout(vooAtual);
       clearTimeout(vooInicial);
-      clearTimeout(temporizadorSuspensao);
-    }
 
-    function pararBruxinha() {
-      clearTimeout(vooAtual);
       personagem.classList.remove('voando');
       voandoAgora = false;
 
       audio.pause();
-
-      try {
-        audio.currentTime = 0;
-      } catch (e) {
-        /* Ignora erros de áudio durante o carregamento. */
-      }
+      audio.currentTime = 0;
     }
+
+    /* REPRODUZ A GARGALHADA */
 
     function rir() {
       if (!somAtivado || suspensa) return;
 
-      try {
-        audio.currentTime = 0;
-      } catch (e) {
-        /* O áudio pode ainda estar carregando. */
-      }
+      audio.currentTime = 0;
 
       var reproducao = audio.play();
 
-      if (reproducao && typeof reproducao.catch === 'function') {
+      if (reproducao && reproducao.catch) {
         reproducao.catch(function () {
-          /* O navegador pode bloquear a reprodução do áudio. */
+          /* O navegador pode bloquear o áudio. */
         });
       }
     }
+
+    /* AGENDA O PRÓXIMO VOO */
 
     function agendarProximo() {
       clearTimeout(temporizador);
 
       if (suspensa) return;
 
-      /* Próximo voo entre 35 e 55 segundos. */
-      temporizador = setTimeout(function () {
-        voar();
-      }, 35000 + Math.random() * 20000);
+      temporizador = setTimeout(
+        voar,
+        35000 + Math.random() * 20000
+      );
     }
 
+    /* FAZ A BRUXINHA VOAR */
+
     function voar() {
-      if (suspensa || voandoAgora) return;
+      if (suspensa) return;
 
       if (document.hidden) {
         agendarProximo();
         return;
       }
 
+      if (voandoAgora) return;
+
       voandoAgora = true;
 
       clearTimeout(vooAtual);
 
       personagem.classList.remove('voando');
-
-      /* Reinicia a animação CSS. */
       void personagem.offsetWidth;
-
       personagem.classList.add('voando');
 
       rir();
@@ -566,9 +557,7 @@ Todos os direitos reservados.
       agendarProximo();
     }
 
-    /* =========================================
-       BOTÃO DE ÁUDIO
-    ========================================= */
+    /* ATIVA OU DESATIVA A RISADA */
 
     botao.addEventListener('click', function () {
       if (suspensa) return;
@@ -581,110 +570,65 @@ Todos os direitos reservados.
       } else {
         botao.textContent = '🔇 Ativar Risada!';
         audio.pause();
-
-        try {
-          audio.currentTime = 0;
-        } catch (e) {
-          /* Ignora erros de áudio. */
-        }
+        audio.currentTime = 0;
       }
     });
 
-    /* =========================================
-       SUSPENSÃO POR 24 HORAS
-       A SUSPENSÃO CONTINUA APÓS RECARREGAR A PÁGINA
-    ========================================= */
+    /* SUSPENDE POR 24 HORAS */
 
-    function esconderControle() {
-      controle.style.setProperty('display', 'none', 'important');
-    }
-
-    function mostrarControle() {
-      controle.style.removeProperty('display');
-    }
-
-    function suspenderPor24Horas() {
+    fechar.addEventListener('click', function () {
       suspensa = true;
       somAtivado = false;
 
-      limparTemporizadores();
       pararBruxinha();
 
       botao.textContent = '🔊 Ativar Risada!';
 
-      var expiraEm = Date.now() + DURACAO_SUSPENSAO;
+      controle.style.setProperty(
+        'display',
+        'none',
+        'important'
+      );
 
-      try {
-        localStorage.setItem(CHAVE_SUSPENSAO, String(expiraEm));
-      } catch (e) {
-        /* A suspensão ainda funciona nesta página. */
-      }
-
-      esconderControle();
-    }
-
-    function verificarSuspensao() {
-      var expiraEm = 0;
-
-      try {
-        expiraEm = Number(localStorage.getItem(CHAVE_SUSPENSAO)) || 0;
-      } catch (e) {
-        expiraEm = 0;
-      }
-
-      var restante = expiraEm - Date.now();
-
-      if (restante > 0) {
-        suspensa = true;
-        esconderControle();
-
-        temporizadorSuspensao = setTimeout(function () {
-          encerrarSuspensao();
-        }, restante);
-
-        return true;
-      }
-
-      try {
-        localStorage.removeItem(CHAVE_SUSPENSAO);
-      } catch (e) {
-        /* O efeito continua funcionando sem armazenamento local. */
-      }
-
-      return false;
-    }
-
-    function encerrarSuspensao() {
       clearTimeout(temporizadorSuspensao);
 
-      suspensa = false;
-      mostrarControle();
+      temporizadorSuspensao = setTimeout(function () {
+        suspensa = false;
 
-      try {
-        localStorage.removeItem(CHAVE_SUSPENSAO);
-      } catch (e) {
-        /* Ignora falhas de armazenamento local. */
-      }
+        controle.style.setProperty(
+          'display',
+          'block',
+          'important'
+        );
+      }, 24 * 60 * 60 * 1000);
+    });
 
-      agendarProximo();
-    }
+    /* PRIMEIRA APARIÇÃO AUTOMÁTICA */
 
-    fechar.addEventListener('click', suspenderPor24Horas);
+    vooInicial = setTimeout(function () {
+      if (suspensa) return;
 
-    /* INICIA A ANIMAÇÃO AUTOMÁTICA APÓS 5 SEGUNDOS */
-    if (!verificarSuspensao()) {
-      vooInicial = setTimeout(function () {
-        voar();
-      }, 5000);
-    }
+      voandoAgora = true;
+
+      personagem.classList.remove('voando');
+      void personagem.offsetWidth;
+      personagem.classList.add('voando');
+
+      vooAtual = setTimeout(function () {
+        personagem.classList.remove('voando');
+        voandoAgora = false;
+      }, 9200);
+    }, 5000);
   }
 
+  /* ESPERA A PÁGINA ESTAR PRONTA */
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', iniciarBruxinha, {
-      once: true
-    });
+    document.addEventListener(
+      'DOMContentLoaded',
+      iniciarBruxinha
+    );
   } else {
     iniciarBruxinha();
   }
 })();
-
