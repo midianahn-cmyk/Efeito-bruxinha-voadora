@@ -317,7 +317,7 @@
           </span>
           <span class="bruxinha-emoji">
             <img alt="Bruxinha voando" class="imagem-bruxinha"
-              src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjDB6Oz_trJ96Oj7faqZd7hyphenhyphen_46pgFFOAOnuZTu01pCOyw2QRCKc4b4DmNvqzwsLEP7l6mr6Kanc4G76DYyr_fGljAsRucrAlizrBQPXeaXvKPooi-E2attdwD_8duEeZ4F7mXhTBbQ00vXz3zmvsWf8ksSxmGiMO2oLAmQuV7g8yDcNa3vnZIwBd41cFSG/s640/Bruxinha%20pequena.gif">
+              src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgVdZqXB4WQNxSMAUIy0_RA-eeAYkBlcg_f1fFkxoSOH6EmDDHu8xfmoD7UZQc71RhxLR-lkjNp85XHNOz4fpsk2TAAq5K3oB4VHaWSC1QmzLDJbhVh7R3fc96BeC84smcFl4d5B5bH4aq6YrQmBYJodF7HJ4C2M6vb034LzdFsBUe04p-ZskJdQwMaEjBJ/s497/Bruxinha%20pequena%20cabelo%20branco.gif">
           </span>
           <span class="bruxinha-vassoura">
             <img alt="" class="imagem-bruxinha"
