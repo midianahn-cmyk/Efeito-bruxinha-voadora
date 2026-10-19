@@ -643,7 +643,7 @@ Este arquivo cria sozinho o HTML, CSS e controles do efeito.
       );
 
       if (somAtivado) {
-        botao.textContent = '🔊 Risada ativada';
+        botao.textContent = '🔊 Ocultar Risada';
         voar();
       } else {
         botao.textContent = '🔇 Ativar Risada!';
