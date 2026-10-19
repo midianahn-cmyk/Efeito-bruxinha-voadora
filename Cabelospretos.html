@@ -519,6 +519,17 @@ Todos os direitos reservados.
 
 <script>
 (function () {
+
+
+// Não executar o efeito nesta postagem específica
+if (
+  window.location.href.split('#')[0].split('?')[0].replace(/\/$/, '') ===
+  'https://www.commaosdesedaoficial.com/2026/10/efeito-renas-voando-no-blog.html'
+) {
+  return;
+}
+
+  
   function iniciarBruxinha() {
     var personagem = document.getElementById(
       'bruxinha-personagem'
